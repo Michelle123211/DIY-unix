@@ -30,9 +30,11 @@ doDiff () {
 	comm "$fileA" "$fileB" | sed 's|$|\t\t|' | cut -d '	' -f2 > "$right"
 	comm "$fileA" "$fileB" | sed 's|$|\t\t|' | cut -d '	' -f3 > "$both"
 
+	N=$(comm "$fileA" "$fileB" | wc -l)
+
 	#awk bere jenom sloupce commu
 	#fakticky nečte žádný vstup, proto ten /dev/null
-	awk -v left="$left" -v right="$right" -v both="$both" '
+	awk -v N="$N" -v left="$left" -v right="$right" -v both="$both" '
 
 		#načte řádku commu (po sloupcích), zazálohuje předchozí řádku
 		function read () {
